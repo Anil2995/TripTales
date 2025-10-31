@@ -1,23 +1,18 @@
-const Listing = require("./models/listing");
-const Review = require("./models/review");
-const ExpressError = require("./utils/ExpressError");
+const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
+const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
 
-// -----------------------------
-// Check if user is logged in
-// -----------------------------
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
+    // store the URL they are trying to access
     req.session.redirectUrl = req.originalUrl;
-    req.flash("error", "You must be logged in to perform this action!");
+    req.flash("error", "You must be logged in!");
     return res.redirect("/login");
   }
   next();
 };
 
-// -----------------------------
-// Save redirect URL
-// -----------------------------
 module.exports.saveRedirectUrl = (req, res, next) => {
   if (req.session.redirectUrl) {
     res.locals.redirectUrl = req.session.redirectUrl;
@@ -25,48 +20,16 @@ module.exports.saveRedirectUrl = (req, res, next) => {
   next();
 };
 
-// -----------------------------
-// Check if current user is the owner of listing
-// -----------------------------
 module.exports.isOwner = async (req, res, next) => {
   const { id } = req.params;
   const listing = await Listing.findById(id);
   if (!listing.owner.equals(req.user._id)) {
-    req.flash("error", "You are not the owner of this listing!");
+    req.flash("error", "You don't have permission to do that!");
     return res.redirect(`/listings/${id}`);
   }
   next();
 };
 
-// -----------------------------
-// Validate listing using Joi
-// -----------------------------
-module.exports.validateListing = (req, res, next) => {
-  const { error } = listingSchema.validate(req.body);
-  if (error) {
-    const errMsg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(errMsg, 400);
-  } else {
-    next();
-  }
-};
-
-// -----------------------------
-// Validate review using Joi
-// -----------------------------
-module.exports.validateReview = (req, res, next) => {
-  const { error } = reviewSchema.validate(req.body);
-  if (error) {
-    const errMsg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(errMsg, 400);
-  } else {
-    next();
-  }
-};
-
-// -----------------------------
-// Check if current user is the author of the review
-// -----------------------------
 module.exports.isReviewAuthor = async (req, res, next) => {
   const { id, reviewId } = req.params;
   const review = await Review.findById(reviewId);
@@ -75,4 +38,24 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     return res.redirect(`/listings/${id}`);
   }
   next();
+};
+
+module.exports.validateListing = (req, res, next) => {
+  const { error } = listingSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+module.exports.validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
 };

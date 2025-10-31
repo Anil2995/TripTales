@@ -10,9 +10,10 @@ const multer = require("multer");
 const { storage } = require("../cloudConfig.js");
 const upload = multer({ storage });
 
-// -----------------------------
-// All Listings + Create Listing
-// -----------------------------
+// ------------------------------------------------------
+// GET → All Listings
+// POST → Create New Listing
+// ------------------------------------------------------
 router.route("/")
   .get(wrapAsync(listingController.index))
   .post(
@@ -22,14 +23,16 @@ router.route("/")
     wrapAsync(listingController.createListing)
   );
 
-// -----------------------------
-// New Listing Form
-// -----------------------------
+// ------------------------------------------------------
+// GET → Form for New Listing
+// ------------------------------------------------------
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-// -----------------------------
-// Show / Update / Delete Listing
-// -----------------------------
+// ------------------------------------------------------
+// GET → Show a Listing
+// PUT → Update Listing
+// DELETE → Delete Listing
+// ------------------------------------------------------
 router.route("/:id")
   .get(wrapAsync(listingController.showListing))
   .put(
@@ -41,9 +44,9 @@ router.route("/:id")
   )
   .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
-// -----------------------------
-// Edit Listing Form
-// -----------------------------
+// ------------------------------------------------------
+// GET → Edit Form for a Listing
+// ------------------------------------------------------
 router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(listingController.renderEditForm));
 
 module.exports = router;
