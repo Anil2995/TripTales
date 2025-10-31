@@ -1,29 +1,36 @@
-const mongoose= require("mongoose");
-const initdata=require("./data.js");
-const Listing=require("../models/listing.js");
+const mongoose = require("mongoose");
+const initdata = require("./data.js");
+const Listing = require("../models/listing.js");
 
-const   MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; // local DB
 
-main().then(()=>{
-    console.log("connected to DB");
-}).catch((err)=>{
-    console.log(err);
-});
-
-async function main(){
-    await mongoose.connect(MONGO_URL);
+async function main() {
+  await mongoose.connect(MONGO_URL);
+  console.log(" Connected to MongoDB");
 }
 
-const initDB= async ()=>{
+const initDB = async () => {
+  try {
+    await main();
+
     await Listing.deleteMany({});
-    initdata.data = initdata.data.map(obj => ({
-        ...obj,
-        owner: "67e30344aa14c6fec25b3799",  // Add if missing
+    console.log("Old listings removed!");
+
+    // Ensure every listing has an owner field
+    const updatedData = initdata.data.map(obj => ({
+      ...obj,
+      owner: obj.owner || "67e30344aa14c6fec25b3799",
     }));
-    
-    
-    await Listing.insertMany(initdata.data);
-    console.log("data was initialized");
-}
+
+    await Listing.insertMany(updatedData);
+    console.log(" Data was initialized!");
+
+  } catch (err) {
+    console.error(" Error initializing DB:", err);
+  } finally {
+    await mongoose.connection.close();
+    console.log(" MongoDB connection closed!");
+  }
+};
 
 initDB();
