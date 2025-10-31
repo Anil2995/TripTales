@@ -119,7 +119,6 @@ http://localhost:8080
 
 🔹 Add **Cloudinary** for image uploads  
 🔹 Add **Search and Filter** functionality  
-🔹 Integrate **Google Maps API** for location display  
 🔹 Add **User Profile Management**  
 
 ---
