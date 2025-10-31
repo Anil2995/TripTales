@@ -48,7 +48,7 @@ const oneWeekFromNow = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
-        secret: process.env.SECRETE ,
+        secret: process.env.SECRET ,
     },  
     touchAfter: 24 * 3600 // time in seconds after which the session will be updated
 });
@@ -59,7 +59,7 @@ store.on("error", ()=>{
 
 const sessionoptions = {
     store,
-    secret: process.env.SECRETE ,
+    secret: process.env.SECRET ,
     resave: false,
     saveUninitialized: true,
     cookie: {
