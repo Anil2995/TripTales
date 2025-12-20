@@ -20,6 +20,9 @@ router.get("/new", isLoggedIn, listingController.renderNewForm);
 // 🟢 Create New Listing
 router.post("/", isLoggedIn, upload.single("listing[image]"), listingController.createListing);
 
+// 🟢 Search Listings (Must be before show route)
+router.get("/search", listingController.search);
+
 // 🟢 Show Single Listing
 router.get("/:id", listingController.showListing);
 

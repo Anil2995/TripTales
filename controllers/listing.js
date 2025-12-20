@@ -9,6 +9,24 @@ module.exports.index = async (req, res) => {
 };
 
 // ------------------------------------------------------
+// 🟢 Search Listings
+// ------------------------------------------------------
+module.exports.search = async (req, res) => {
+  const { q } = req.query;
+  if (!q) {
+    return res.redirect("/listings");
+  }
+  const allListings = await Listing.find({
+    $or: [
+      { title: { $regex: q, $options: "i" } },
+      { location: { $regex: q, $options: "i" } },
+      { country: { $regex: q, $options: "i" } },
+    ],
+  });
+  res.render("listings/index.ejs", { allListings });
+};
+
+// ------------------------------------------------------
 // 🟢 Render Form for New Listing
 // ------------------------------------------------------
 module.exports.renderNewForm = (req, res) => {
