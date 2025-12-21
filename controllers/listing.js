@@ -44,6 +44,11 @@ module.exports.createListing = async (req, res) => {
       url: req.file.path,
       filename: req.file.filename,
     };
+  } else {
+    newListing.image = {
+      url: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+      filename: "default_image",
+    };
   }
 
   newListing.owner = req.user._id;
@@ -83,7 +88,9 @@ module.exports.renderEditForm = async (req, res) => {
     return res.redirect("/listings");
   }
 
-  res.render("listings/edit.ejs", { listing });
+  let originalImageUrl = listing.image.url;
+  originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");
+  res.render("listings/edit.ejs", { listing, originalImageUrl });
 };
 
 // ------------------------------------------------------
