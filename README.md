@@ -6,15 +6,9 @@ A full-stack vacation rental platform inspired by Airbnb, built with Node.js, Ex
 
 ## 🔗 Live Demo
 
-### **👉 [Visit TripTales Live](https://triptales-airbnb-replica.onrender.com)**
+### **👉 [Visit TripTales Live](https://triptales-8b6r.onrender.com)**
 
----
-
-## 📸 Screenshots
-
-| Homepage | Listing Detail | Dark Mode |
-|----------|----------------|-----------|
-| ![Homepage](https://via.placeholder.com/300x200?text=Homepage) | ![Detail](https://via.placeholder.com/300x200?text=Listing) | ![Dark](https://via.placeholder.com/300x200?text=Dark+Mode) |
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Now-FF385C?style=for-the-badge)](https://triptales-8b6r.onrender.com)
 
 ---
 
@@ -131,8 +125,8 @@ This project is open source and available under the [MIT License](LICENSE).
 
 <div align="center">
 
-**⭐ Star this repo if you found it helpful!**
+### 🌐 **[Open Live Demo](https://triptales-8b6r.onrender.com)**
 
-[🔗 Live Demo](https://triptales-airbnb-replica.onrender.com) • [📂 GitHub](https://github.com/Anil2995/TripTales)
+**⭐ Star this repo if you found it helpful!**
 
 </div>
