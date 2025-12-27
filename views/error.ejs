@@ -1,6 +1,110 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row" >
-    <div class="alert alert-danger col-6 offset-3" role="alert">
-        <p class="alert-heading"> <%= message %></p>
-      </div>
-</div>
+
+  <style>
+    .error-page {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-xxl);
+      animation: fadeIn 0.5s ease;
+    }
+
+    .error-icon {
+      font-size: 6rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--space-xl);
+      animation: pulse 2s infinite;
+    }
+
+    .error-code {
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: var(--space-md);
+    }
+
+    .error-message {
+      font-size: 1.3rem;
+      color: var(--grey);
+      margin-bottom: var(--space-xl);
+      max-width: 500px;
+    }
+
+    .error-actions {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .error-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-xl);
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--transition-normal);
+    }
+
+    .error-btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+    }
+
+    .error-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      color: white;
+    }
+
+    .error-btn-secondary {
+      background: transparent;
+      color: var(--dark);
+      border: 2px solid var(--dark);
+    }
+
+    .error-btn-secondary:hover {
+      background: var(--dark);
+      color: white;
+    }
+
+    .error-illustration {
+      max-width: 300px;
+      margin-bottom: var(--space-xl);
+      opacity: 0.8;
+    }
+  </style>
+
+  <div class="error-page">
+    <i class="fa-solid fa-exclamation-triangle error-icon"></i>
+
+    <h1 class="error-code">Oops!</h1>
+
+    <p class="error-message">
+      <strong>
+        <%= message %>
+      </strong>
+      <br>
+      <small class="text-muted">Don't worry, it happens to the best of us.</small>
+    </p>
+
+    <div class="error-actions">
+      <a href="/listings" class="error-btn error-btn-primary">
+        <i class="fa-solid fa-home"></i>
+        Go to Homepage
+      </a>
+      <a href="javascript:history.back()" class="error-btn error-btn-secondary">
+        <i class="fa-solid fa-arrow-left"></i>
+        Go Back
+      </a>
+    </div>
+  </div>

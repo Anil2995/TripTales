@@ -1,43 +1,297 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-    <h1 class="col-6 offset-3">signup on wanderlust</h1>
-    <div class="col-6 offset-3">
-      
-        <form action="/signup" method="POST" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input 
-                name="username" 
-                id="username"
-                 type="text"
-                  class="form-control" required>
-                <div class="valid-feedback">
-                     Looks good!
-                  </div>
+    <style>
+        .auth-container {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .auth-card {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .auth-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--border-light);
+            text-align: center;
+        }
+
+        .auth-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .auth-body {
+            padding: var(--space-xl);
+        }
+
+        .auth-welcome {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .auth-welcome h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .auth-welcome p {
+            color: var(--grey);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: var(--space-lg) 0;
+            color: var(--grey);
+            font-size: 0.85rem;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .auth-divider span {
+            padding: 0 var(--space-md);
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            border: 1px solid var(--dark);
+            border-radius: var(--radius-sm);
+            background: transparent;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            color: var(--dark);
+        }
+
+        .social-btn:hover {
+            background: var(--background-secondary);
+        }
+
+        .social-btn i {
+            font-size: 1.2rem;
+        }
+
+        .form-floating {
+            margin-bottom: var(--space-md);
+        }
+
+        .form-floating input {
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            padding: var(--space-lg);
+            height: auto;
+        }
+
+        .form-floating label {
+            padding: var(--space-md) var(--space-lg);
+            color: var(--grey);
+        }
+
+        .auth-submit {
+            width: 100%;
+            padding: var(--space-md);
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            margin-top: var(--space-md);
+        }
+
+        .auth-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding: var(--space-lg);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: var(--space-sm);
+            transition: all var(--transition-normal);
+        }
+
+        .terms-text {
+            font-size: 0.8rem;
+            color: var(--grey);
+            text-align: center;
+            margin-top: var(--space-lg);
+        }
+
+        .terms-text a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Sign up</h2>
             </div>
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input 
-                name="email" 
-                id="email"
-                 type="email"
-                  class="form-control" required>
-                
+            <div class="auth-body">
+                <div class="auth-welcome">
+                    <h3>Welcome to TripTales</h3>
+                    <p>Create an account to start your journey</p>
+                </div>
+
+                <!-- Social Login Options -->
+                <div class="social-login">
+                    <button class="social-btn" onclick="showToast('Google signup coming soon!')">
+                        <i class="fa-brands fa-google"></i>
+                        Continue with Google
+                    </button>
+                    <button class="social-btn" onclick="showToast('Facebook signup coming soon!')">
+                        <i class="fa-brands fa-facebook"></i>
+                        Continue with Facebook
+                    </button>
+                </div>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <!-- Signup Form -->
+                <form action="/signup" method="POST" class="needs-validation" novalidate>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                            required autocomplete="username" minlength="3">
+                        <label for="username">
+                            <i class="fa-solid fa-user me-2"></i>Username
+                        </label>
+                        <div class="invalid-feedback">Please choose a username (min 3 characters)</div>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required
+                            autocomplete="email">
+                        <label for="email">
+                            <i class="fa-solid fa-envelope me-2"></i>Email
+                        </label>
+                        <div class="invalid-feedback">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                            required autocomplete="new-password" minlength="8"
+                            oninput="checkPasswordStrength(this.value)">
+                        <label for="password">
+                            <i class="fa-solid fa-lock me-2"></i>Password
+                        </label>
+                        <div class="password-strength" id="passwordStrength"></div>
+                        <div class="invalid-feedback">Password must be at least 8 characters</div>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="newsletter">
+                        <label class="form-check-label" for="newsletter">
+                            <small>Send me travel inspiration, tips, and offers</small>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="auth-submit">
+                        <i class="fa-solid fa-user-plus me-2"></i>
+                        Create Account
+                    </button>
+
+                    <p class="terms-text">
+                        By signing up, you agree to our
+                        <a href="#">Terms of Service</a> and
+                        <a href="#">Privacy Policy</a>
+                    </p>
+                </form>
             </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input 
-                name="password" 
-                id="password"
-                 type="password"
-                  class="form-control" required>
-                
+            <div class="auth-footer">
+                <p class="mb-0">
+                    Already have an account?
+                    <a href="/login">Log in</a>
+                </p>
             </div>
-
-      <button class="btn btn-success">SignUp</button>
-        </form>
+        </div>
     </div>
-</div>
+
+    <script>
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed bottom-0 start-50 translate-middle-x mb-4 p-3 bg-dark text-white rounded-pill shadow-lg';
+            toast.style.zIndex = '9999';
+            toast.style.animation = 'fadeIn 0.3s ease';
+            toast.innerHTML = `<i class="fa-solid fa-info-circle me-2"></i>${message}`;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        function checkPasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrength');
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/\d/)) strength++;
+            if (password.match(/[^a-zA-Z\d]/)) strength++;
+
+            const colors = ['#FF385C', '#FF6B35', '#F7C548', '#008A05'];
+            const widths = ['25%', '50%', '75%', '100%'];
+
+            if (password.length === 0) {
+                strengthBar.style.width = '0';
+                strengthBar.style.background = 'transparent';
+            } else {
+                strengthBar.style.width = widths[strength - 1] || '25%';
+                strengthBar.style.background = colors[strength - 1] || colors[0];
+            }
+        }
+    </script>

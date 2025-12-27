@@ -4,32 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WanderLust</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="description"
+        content="TripTales - Discover unique places to stay around the world. Book vacation rentals, cabins, beach houses, and unique homes for your next adventure.">
+    <meta name="keywords"
+        content="vacation rentals, travel, accommodation, airbnb alternative, holiday homes, TripTales">
+    <meta name="author" content="TripTales">
+    <meta name="theme-color" content="#FF385C">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TripTales - Find Your Next Adventure">
+    <meta property="og:description"
+        content="Discover unique places to stay around the world. Book vacation rentals, cabins, beach houses, and unique homes.">
+    <meta property="og:image" content="/images/og-image.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <title>TripTales | Find Unique Places to Stay</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/rating.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+
+    <!-- Bootstrap Icons (fallback) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/rating.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/css/style.css" as="style">
 </head>
 
 <body>
     <%- include("../includes/navbar.ejs") %>
-        <div class="container">
+
+        <main class="container">
             <%- include("../includes/flash.ejs") %>
                 <%- body %>
-        </div>
+        </main>
+
         <%- include("../includes/footer.ejs") %>
+
+            <!-- Bootstrap Bundle with Popper -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                 crossorigin="anonymous"></script>
+
+            <!-- Custom Scripts -->
             <script src="/js/script.js"></script>
+
+            <!-- Load saved theme preference -->
+            <script>
+                // Apply saved theme on page load
+                (function () {
+                    if (localStorage.getItem('theme') === 'dark') {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                    }
+                })();
+            </script>
 </body>
 
 </html>

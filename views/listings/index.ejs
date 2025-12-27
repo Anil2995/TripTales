@@ -1,131 +1,306 @@
 <% layout("/layouts/boilerplate") %>
 
-  <body>
-    <style>
-      #filters {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-      }
+  <style>
+    .listings-page {
+      animation: fadeIn 0.5s ease;
+    }
+  </style>
 
-      .filter {
-        text-align: center;
-        margin-right: 2rem;
-        margin-top: 2rem;
-        opacity: 0.7;
-      }
-
-      .filter:hover {
-        opacity: 1;
-        cursor: pointer;
-      }
-
-      .filter p {
-        font-size: 0.8rem;
-      }
-
-      .tax-info {
-        display: none;
-      }
-
-      .tax-toggle {
-        border: 1px solid black;
-        border-radius: 1rem;
-        height: 3.25rem;
-        padding: 1rem;
-        margin-left: 1rem;
-        display: flex;
-        align-items: center;
-
-      }
-    </style>
-    <!-- <h3>All Listings</h3> -->
-    <!-- <form  method="GET" action="/listings/new">
-        <button>Create New Listing</button>
-    </form> -->
+  <div class="listings-page">
+    <!-- Category Filter Bar -->
     <div id="filters">
-      <div class="filter">
-        <div><i class="fa-solid fa-fire"></i></div>
+      <div class="filter active" data-category="all">
+        <i class="fa-solid fa-border-all"></i>
+        <p>All</p>
+      </div>
+      <div class="filter" data-category="trending">
+        <i class="fa-solid fa-fire"></i>
         <p>Trending</p>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-bed"></i></i></div>
+      <div class="filter" data-category="rooms">
+        <i class="fa-solid fa-bed"></i>
         <p>Rooms</p>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-mountain-city"></i></div>
+      <div class="filter" data-category="cities">
+        <i class="fa-solid fa-city"></i>
         <p>Iconic Cities</p>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-mountain"></i></div>
+      <div class="filter" data-category="mountains">
+        <i class="fa-solid fa-mountain"></i>
         <p>Mountains</p>
       </div>
-      <div class="filter">
-        <div><i class="fa-brands fa-fort-awesome"></i></div>
+      <div class="filter" data-category="castles">
+        <i class="fa-brands fa-fort-awesome"></i>
         <p>Castles</p>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-person-swimming"></i></div>
+      <div class="filter" data-category="pools">
+        <i class="fa-solid fa-person-swimming"></i>
         <p>Amazing Pools</p>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-campground"></i></div>
+      <div class="filter" data-category="camping">
+        <i class="fa-solid fa-campground"></i>
         <p>Camping</p>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-cow"></i></div>
+      <div class="filter" data-category="farms">
+        <i class="fa-solid fa-cow"></i>
         <p>Farms</p>
       </div>
-      <div class="filter">
-        <div><i class="fa-regular fa-snowflake"></i></div>
+      <div class="filter" data-category="arctic">
+        <i class="fa-regular fa-snowflake"></i>
         <p>Arctic</p>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-igloo"></i></div>
+      <div class="filter" data-category="domes">
+        <i class="fa-solid fa-igloo"></i>
         <p>Domes</p>
       </div>
-
-
-      <div class="tax-toggle">
-        <div class="form-check-reverse form-switch">
-          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-          <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
-        </div>
+      <div class="filter" data-category="beach">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <p>Beachfront</p>
+      </div>
+      <div class="filter" data-category="lakefront">
+        <i class="fa-solid fa-water"></i>
+        <p>Lakefront</p>
+      </div>
+      <div class="filter" data-category="tropical">
+        <i class="fa-solid fa-tree"></i>
+        <p>Tropical</p>
+      </div>
+      <div class="filter" data-category="islands">
+        <i class="fa-solid fa-island-tropical"></i>
+        <p>Islands</p>
+      </div>
+      <div class="filter" data-category="vineyards">
+        <i class="fa-solid fa-wine-glass"></i>
+        <p>Vineyards</p>
+      </div>
+      <div class="filter" data-category="design">
+        <i class="fa-solid fa-palette"></i>
+        <p>Design</p>
+      </div>
+      <div class="filter" data-category="luxe">
+        <i class="fa-solid fa-gem"></i>
+        <p>Luxe</p>
       </div>
     </div>
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-      <% for(let listing of allListings){ %>
-        <a href="/listings/<%= listing._id %>" class="listing-link">
-          <div class="card listing-card">
-            <img src="<%=listing.image.url%>" class="card-img-top" alt="listing-image" style="height : 20rem">
-            <div class="card-img-overlay">
-              <i class="fa-solid fa-heart heart-icon"></i>
-            </div>
-            <div class="card-body">
-              <p class="card-text">
-                <b>
-                  <%= listing.title %>
-                </b>
-                <span class="text-muted">
-                  <%= listing.location %>, <%= listing.country %>
-                </span><br>
-                <span class="fw-bold">&#8377;<%= listing.price.toLocaleString("en-IN") %></span> night
-                <i class="tax-info text-muted"> &nbsp; &nbsp;+18% GST</i>
-              </p>
 
-            </div>
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="d-flex align-items-center gap-3">
+        <button class="filter-btn" id="filterModalBtn">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Filters</span>
+        </button>
+
+        <!-- Tax Toggle -->
+        <div class="tax-toggle">
+          <div class="form-check form-switch mb-0">
+            <input class="form-check-input" type="checkbox" role="switch" id="taxToggle">
+            <label class="form-check-label" for="taxToggle">Display total with taxes</label>
           </div>
-        </a>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-grey">
+          <strong>
+            <%= allListings.length %>
+          </strong> places found
+        </span>
+      </div>
+    </div>
+
+    <!-- Listings Grid -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <% for(let listing of allListings){ %>
+        <div class="col">
+          <a href="/listings/<%= listing._id %>" class="listing-link">
+            <div class="card listing-card">
+              <!-- Image Container -->
+              <div class="card-image-container">
+                <img src="<%=listing.image.url%>" class="card-img-top" alt="<%= listing.title %>" loading="lazy">
+
+                <!-- Overlay with Heart Icon -->
+                <div class="card-img-overlay">
+                  <!-- Guest Favourite Badge (random for demo) -->
+                  <% if(Math.random()> 0.7) { %>
+                    <span class="guest-favourite-badge">
+                      <i class="fa-solid fa-trophy"></i>
+                      Guest favourite
+                    </span>
+                    <% } else { %>
+                      <span></span>
+                      <% } %>
+
+                        <!-- Wishlist Heart -->
+                        <i class="fa-solid fa-heart heart-icon"
+                          onclick="event.preventDefault(); toggleWishlist(this);"></i>
+                </div>
+
+                <!-- Carousel Dots (visual only) -->
+                <div class="carousel-dots">
+                  <span class="carousel-dot active"></span>
+                  <span class="carousel-dot"></span>
+                  <span class="carousel-dot"></span>
+                  <span class="carousel-dot"></span>
+                  <span class="carousel-dot"></span>
+                </div>
+              </div>
+
+              <!-- Card Body -->
+              <div class="card-body">
+                <div class="card-header-row">
+                  <h5 class="card-title">
+                    <%= listing.title %>
+                  </h5>
+                  <div class="card-rating">
+                    <i class="fa-solid fa-star"></i>
+                    <span>
+                      <%= (4 + Math.random()).toFixed(2) %>
+                    </span>
+                  </div>
+                </div>
+
+                <p class="card-location">
+                  <i class="fa-solid fa-location-dot me-1"></i>
+                  <%= listing.location %>, <%= listing.country %>
+                </p>
+
+                <p class="card-date">
+                  <i class="fa-regular fa-calendar me-1"></i>
+                  Available now
+                </p>
+
+                <p class="card-price">
+                  <span class="price-amount">&#8377;<%= listing.price.toLocaleString("en-IN") %></span>
+                  <span class="price-period">/ night</span>
+                  <span class="tax-info text-muted"> &nbsp;+18% GST</span>
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
         <% } %>
     </div>
-  </body>
+
+    <!-- Empty State -->
+    <% if(allListings.length===0) { %>
+      <div class="text-center py-5">
+        <i class="fa-solid fa-house-chimney-crack fa-4x text-grey mb-4"></i>
+        <h3>No listings found</h3>
+        <p class="text-grey">Try adjusting your search or filters</p>
+        <a href="/listings" class="btn btn-primary mt-3">Clear filters</a>
+      </div>
+      <% } %>
+  </div>
+
+  <!-- Map Toggle Button (Fixed) -->
+  <button class="map-toggle-btn" id="mapToggleBtn">
+    <i class="fa-solid fa-map"></i>
+    <span>Show map</span>
+  </button>
+
+  <!-- Dark Mode Toggle -->
+  <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+    <i class="fa-solid fa-moon"></i>
+  </button>
 
   <script>
-    let taxSwitch = document.getElementById("switchCheckDefault");
-    taxSwitch.addEventListener("change", function () {
-      let taxInfo = document.getElementsByClassName("tax-info");
-      for (info of taxInfo) {
-        info.style.display = taxSwitch.checked ? "inline" : "none";
+    // Tax Toggle Functionality
+    const taxToggle = document.getElementById('taxToggle');
+    const taxInfoElements = document.getElementsByClassName('tax-info');
+
+    taxToggle.addEventListener('change', function () {
+      for (let info of taxInfoElements) {
+        info.style.display = this.checked ? 'inline' : 'none';
+      }
+    });
+
+    // Wishlist Toggle
+    function toggleWishlist(element) {
+      element.classList.toggle('liked');
+
+      if (element.classList.contains('liked')) {
+        // Show a toast notification
+        showToast('Added to wishlist!');
+      } else {
+        showToast('Removed from wishlist');
+      }
+    }
+
+    // Toast Notification
+    function showToast(message) {
+      // Create toast element
+      const toast = document.createElement('div');
+      toast.className = 'position-fixed bottom-0 start-50 translate-middle-x mb-4 p-3 bg-dark text-white rounded-pill shadow-lg';
+      toast.style.zIndex = '9999';
+      toast.style.animation = 'fadeIn 0.3s ease';
+      toast.innerHTML = `<i class="fa-solid fa-heart me-2"></i>${message}`;
+
+      document.body.appendChild(toast);
+
+      // Remove after 2 seconds
+      setTimeout(() => {
+        toast.style.animation = 'fadeIn 0.3s ease reverse';
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+
+    // Category Filter Click Handler
+    const filters = document.querySelectorAll('.filter');
+    filters.forEach(filter => {
+      filter.addEventListener('click', function () {
+        // Remove active from all
+        filters.forEach(f => f.classList.remove('active'));
+        // Add active to clicked
+        this.classList.add('active');
+
+        // Filter animation
+        const cards = document.querySelectorAll('.listing-card');
+        cards.forEach(card => {
+          card.style.animation = 'none';
+          card.offsetHeight; // Trigger reflow
+          card.style.animation = 'scaleIn 0.3s ease forwards';
+        });
+      });
+    });
+
+    // Dark Mode Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('i');
+
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      themeIcon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    themeToggle.addEventListener('click', function () {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+      }
+    });
+
+    // Map Toggle (placeholder functionality)
+    const mapToggleBtn = document.getElementById('mapToggleBtn');
+    mapToggleBtn.addEventListener('click', function () {
+      showToast('Map view coming soon! 🗺️');
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
       }
     });
   </script>

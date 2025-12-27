@@ -1,40 +1,245 @@
 <% layout("/layouts/boilerplate") %>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        .auth-container {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+        }
 
-<div class="row mt-4 justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-lg p-4">
-            <h2 class="text-center mb-4">Login</h2>
+        .auth-card {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+        }
 
-            <form action="/login" method="POST" class="needs-validation" novalidate>
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="text" name="username" id="username" class="form-control" required>
+        .auth-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--border-light);
+            text-align: center;
+        }
+
+        .auth-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .auth-body {
+            padding: var(--space-xl);
+        }
+
+        .auth-welcome {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .auth-welcome h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .auth-welcome p {
+            color: var(--grey);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: var(--space-lg) 0;
+            color: var(--grey);
+            font-size: 0.85rem;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .auth-divider span {
+            padding: 0 var(--space-md);
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            border: 1px solid var(--dark);
+            border-radius: var(--radius-sm);
+            background: transparent;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            color: var(--dark);
+        }
+
+        .social-btn:hover {
+            background: var(--background-secondary);
+        }
+
+        .social-btn i {
+            font-size: 1.2rem;
+        }
+
+        .form-floating {
+            margin-bottom: var(--space-md);
+        }
+
+        .form-floating input {
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            padding: var(--space-lg);
+            height: auto;
+        }
+
+        .form-floating label {
+            padding: var(--space-md) var(--space-lg);
+            color: var(--grey);
+        }
+
+        .auth-submit {
+            width: 100%;
+            padding: var(--space-md);
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            margin-top: var(--space-md);
+        }
+
+        .auth-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding: var(--space-lg);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Log in</h2>
+            </div>
+
+            <div class="auth-body">
+                <div class="auth-welcome">
+                    <h3>Welcome to TripTales</h3>
+                    <p>Log in to discover unique places around the world</p>
+                </div>
+
+                <!-- Social Login Options -->
+                <div class="social-login">
+                    <button class="social-btn" onclick="showToast('Google login coming soon!')">
+                        <i class="fa-brands fa-google"></i>
+                        Continue with Google
+                    </button>
+                    <button class="social-btn" onclick="showToast('Facebook login coming soon!')">
+                        <i class="fa-brands fa-facebook"></i>
+                        Continue with Facebook
+                    </button>
+                    <button class="social-btn" onclick="showToast('Apple login coming soon!')">
+                        <i class="fa-brands fa-apple"></i>
+                        Continue with Apple
+                    </button>
+                </div>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <!-- Login Form -->
+                <form action="/login" method="POST" class="needs-validation" novalidate>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                            required autocomplete="username">
+                        <label for="username">
+                            <i class="fa-solid fa-user me-2"></i>Username
+                        </label>
                     </div>
-                </div>
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                        <input type="password" name="password" id="password" class="form-control" required>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                            required autocomplete="current-password">
+                        <label for="password">
+                            <i class="fa-solid fa-lock me-2"></i>Password
+                        </label>
                     </div>
-                </div>
 
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="rememberMe">
-                    <label class="form-check-label" for="rememberMe">Remember Me</label>
-                </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="text-muted small" onclick="showToast('Password reset coming soon!')">
+                            Forgot password?
+                        </a>
+                    </div>
 
-                <button class="btn btn-success w-100">Login</button>
+                    <button type="submit" class="auth-submit">
+                        <i class="fa-solid fa-right-to-bracket me-2"></i>
+                        Log in
+                    </button>
+                </form>
+            </div>
 
-                <div class="text-center mt-3">
-                    <a href="/forgot-password" class="text-muted">Forgot Password?</a>
-                </div>
-            </form>
+            <div class="auth-footer">
+                <p class="mb-0">
+                    Don't have an account?
+                    <a href="/signup">Sign up</a>
+                </p>
+            </div>
         </div>
     </div>
-</div>
+
+    <script>
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed bottom-0 start-50 translate-middle-x mb-4 p-3 bg-dark text-white rounded-pill shadow-lg';
+            toast.style.zIndex = '9999';
+            toast.style.animation = 'fadeIn 0.3s ease';
+            toast.innerHTML = `<i class="fa-solid fa-info-circle me-2"></i>${message}`;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+    </script>

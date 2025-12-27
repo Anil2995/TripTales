@@ -1,13 +1,37 @@
-<% if (typeof success !== "undefined" && success.length) { %>
-  <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
-    <%= success %>
+<% if(success && success.length) { %>
+  <div class="alert alert-success alert-dismissible fade show d-flex align-items-center shadow-sm" role="alert"
+    style="border-radius: var(--radius-md); border: none; animation: slideIn 0.3s ease;">
+    <i class="fa-solid fa-circle-check me-3 fs-5"></i>
+    <div class="flex-grow-1">
+      <%= success %>
+    </div>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-<% } %>
+  <% } %>
 
-<% if (typeof error !== "undefined" && error.length) { %>
-  <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert">
-    <%= error %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% } %>
+    <% if(error && error.length) { %>
+      <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center shadow-sm" role="alert"
+        style="border-radius: var(--radius-md); border: none; animation: slideIn 0.3s ease;">
+        <i class="fa-solid fa-circle-exclamation me-3 fs-5"></i>
+        <div class="flex-grow-1">
+          <%= error %>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <% } %>
+
+        <style>
+          .alert-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+          }
+
+          .alert-danger {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+          }
+
+          .alert {
+            margin-bottom: var(--space-lg);
+          }
+        </style>
